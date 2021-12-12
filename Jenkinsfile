@@ -13,13 +13,6 @@ pipeline {
             }
         }
         
-        stage('Maven Package') {
-            steps {
-                 sh '''cd $microservice
-                        mvn package'''
-            }
-        }
-        
         stage('SonarQube analysis') { 
              steps {
                 withSonarQubeEnv('Sonar') { 
@@ -28,6 +21,19 @@ pipeline {
                 }
              }
         }
+        stage("SonarQube Quality Gate") {
+            steps {
+                   waitForQualityGate abortPipeline: true
+                }
+        }
+        
+        stage('Maven Package') {
+            steps {
+                 sh '''cd $microservice
+                        mvn package'''
+            }
+        }
+        
         
         stage('Build Image') {
             steps {
