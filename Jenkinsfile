@@ -8,6 +8,11 @@ pipeline {
     agent any
 
     stages {
+        stage('Approval Stage') {
+            steps {
+                input 'Approve Workflow?'
+            }
+        }
         
         stage('Git Checkout') {
             steps {
