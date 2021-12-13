@@ -1,4 +1,6 @@
 pipeline {
+    parameters { choice(name: 'microservice', choices: ['user-service', 'department-service', 'service-registry' , 'cloud-gateway' , 'hystrix-dashboard' , 'cloud-config-server'], description: '') }
+    
     environment {
         registryCredential = 'dockerhub'
     }
@@ -38,7 +40,7 @@ pipeline {
         stage('Build Image') {
             steps {
                     sh '''
-                    cd $microservice 
+                    cd $microservice
                     docker build -t d1247/$microservice:latest .
                     '''
                 
