@@ -41,3 +41,10 @@ management:
     web:
       exposure:
         include: hystrix.stream
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: ${EUREKA_SERVER:http://35.192.191.72:8761/eureka}
