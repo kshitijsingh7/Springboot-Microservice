@@ -8,17 +8,19 @@ pipeline {
     agent any
 
     stages {
-        stage('Approval Stage') {
-            steps {
-                input 'Approve Workflow?'
-            }
-        }
         
         stage('Git Checkout') {
             steps {
                 git branch: 'staging', changelog: false, poll: false, url: 'https://github.com/kshitijsingh7/Springboot-Microservice.git'
             }
         }
+        
+        stage('Maven Package') {
+            steps {
+                 sh '''cd $microservice
+                        mvn package'''
+            }
+        } 
         
         stage('SonarQube analysis') { 
              steps {
@@ -28,18 +30,19 @@ pipeline {
                 }
              }
         }
+        
         stage("SonarQube Quality Gate") {
             steps {
                    waitForQualityGate abortPipeline: true
                 }
         }
         
-        stage('Maven Package') {
+        
+        stage('Approval Stage') {
             steps {
-                 sh '''cd $microservice
-                        mvn package'''
+                input 'Approve Workflow?'
             }
-        }
+        }        
         
         
         stage('Build Image') {
