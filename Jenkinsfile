@@ -64,7 +64,7 @@ pipeline {
               }
            }
         }
-        stage('Run Containers') {
+        stage('Running Containers') {
             steps {
                 sh 'docker-compose -p springboot-microservice up -d'
             }
