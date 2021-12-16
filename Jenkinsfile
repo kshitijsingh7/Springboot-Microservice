@@ -76,7 +76,7 @@ pipeline {
         }
         stage('Stop Containers') {
             steps {
-                sh 'docker-compose stop'
+                sh 'docker-compose -f docker-compose.yml down'
             }
         } 
     }
