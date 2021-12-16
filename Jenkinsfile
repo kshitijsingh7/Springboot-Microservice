@@ -67,7 +67,11 @@ pipeline {
         stage('Run Containers') {
             steps {
                 sh 'docker-compose -p springboot-microservice up -d'
-                input 'Approve Workflow?'
+            }
+        }
+        stage('Run Containers') {
+            steps {
+                input 'Stop container'
                 sh 'docker-compose stop'
             }
         } 
