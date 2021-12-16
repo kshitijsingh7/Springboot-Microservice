@@ -1,0 +1,52 @@
+version: '3'
+services:
+  service-registry:
+    image: d1247/service-registry:latest
+    ports:
+      - 8761:8761
+  cloud-config-server:
+    image: d1247/cloud-config-server:latest
+    environment:
+      - JAVA_OPTS=
+         -DEUREKA_SERVER=http://service-registry:8761/eureka
+    depends_on:
+      - service-registry
+  cloud-gateway:
+    image: d1247/cloud-gateway:latest
+    environment:
+      - JAVA_OPTS=
+         -DEUREKA_SERVER=http://service-registry:8761/eureka
+    depends_on:
+      - service-registry
+      - cloud-config-server
+    ports:
+      - 9191:9191
+  department-service:
+    image: d1247/department-service:latest
+    environment:
+      - JAVA_OPTS=
+        -DEUREKA_SERVER=http://service-registry:8761/eureka
+    restart: on-failure
+    depends_on:
+      - service-registry
+      - cloud-config-server
+  user-service:
+    image: d1247/user-service:latest
+    environment:
+      - JAVA_OPTS=
+        -DEUREKA_SERVER=http://service-registry:8761/eureka
+    restart: on-failure
+    depends_on:
+      - service-registry
+      - cloud-config-server
+      - department-service
+  hystrix-dashboard:
+    image: d1247/hystrix-dashboard:latest
+    environment:
+      - JAVA_OPTS=
+        -DEUREKA_SERVER=http://service-registry:8761/eureka
+    depends_on:
+      - service-registry
+      - cloud-config-server  
+    ports:
+      - 9295:9295
