@@ -69,9 +69,13 @@ pipeline {
                 sh 'docker-compose -p springboot-microservice up -d'
             }
         }
-        stage('Stop Containers') {
+        stage('Approve Stop?') {
             steps {
                 input 'Stop container'
+            }
+        }
+        stage('Stop Containers') {
+            steps {
                 sh 'docker-compose stop'
             }
         } 
