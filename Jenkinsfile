@@ -64,5 +64,10 @@ pipeline {
               }
            }
         }
+        stage('Run Containers') {
+            steps {
+                sh 'docker-compose up -d'
+            }
+        } 
     }
 }
