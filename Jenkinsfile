@@ -56,10 +56,10 @@ pipeline {
               }
            }
         }
-        stage('Running Containers') {
-            steps {
-                sh 'docker-compose -p springboot-microservice up -d'
-            }
-        }
+//         stage('Running Containers') {
+//             steps {
+//                 sh 'docker-compose -p springboot-microservice up -d'
+//             }
+//         }
     }
 }
