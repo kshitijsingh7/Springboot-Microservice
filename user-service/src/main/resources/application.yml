@@ -10,4 +10,4 @@ eureka:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://${java.net.InetAddress}:8761/eureka/
+      defaultZone: ${http://java.net.InetAddress:8761/eureka/}
