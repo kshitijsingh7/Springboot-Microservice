@@ -11,7 +11,7 @@ pipeline {
         
         stage('Git Checkout') {
             steps {
-                git branch: 'master', changelog: false, poll: false, url: 'https://github.com/kshitijsingh7/Springboot-Microservice.git'
+                git branch: 'dev', changelog: false, poll: false, url: 'https://github.com/kshitijsingh7/Springboot-Microservice.git'
             }
         }
         
@@ -35,15 +35,7 @@ pipeline {
             steps {
                    waitForQualityGate abortPipeline: true
                 }
-        }
-        
-        
-        stage('Approval Stage') {
-            steps {
-                input 'Approve Workflow?'
-            }
-        }        
-        
+        }    
         
         stage('Build Image') {
             steps {
