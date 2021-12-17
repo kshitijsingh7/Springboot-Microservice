@@ -6,6 +6,8 @@ services:
       - 8761:8761
   cloud-config-server:
     image: d1247/cloud-config-server:latest
+    ports:
+      - 9296:9296
     environment:
       - JAVA_OPTS=
          -DEUREKA_SERVER=http://service-registry:8761/eureka
@@ -23,6 +25,8 @@ services:
       - 9191:9191
   department-service:
     image: d1247/department-service:latest
+    ports:
+      - 9001:9001
     environment:
       - JAVA_OPTS=
         -DEUREKA_SERVER=http://service-registry:8761/eureka
@@ -32,6 +36,8 @@ services:
       - cloud-config-server
   user-service:
     image: d1247/user-service:latest
+    ports:
+      - 9002:9002
     environment:
       - JAVA_OPTS=
         -DEUREKA_SERVER=http://service-registry:8761/eureka
