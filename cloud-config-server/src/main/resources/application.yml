@@ -10,3 +10,10 @@ spring:
         git:
           uri: https://github.com/kshitijsingh7/config-server
           clone-on-start: true
+          
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://service-registry:8761/eureka/
