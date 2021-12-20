@@ -11,7 +11,7 @@ pipeline {
         
         stage('Git Checkout') {
             steps {
-                git branch: 'master', changelog: false, poll: false, url: 'https://github.com/kshitijsingh7/Springboot-Microservice.git'
+                git branch: 'kubernetes', changelog: false, poll: false, url: 'https://github.com/kshitijsingh7/Springboot-Microservice.git'
             }
         }
         
@@ -22,34 +22,34 @@ pipeline {
             }
         } 
         
-        stage('SonarQube analysis') { 
-             steps {
-                withSonarQubeEnv('Sonar') { 
-                    sh '''cd $microservice
-                        mvn clean verify sonar:sonar -Dsonar.projectKey=$microservice'''
-                }
-             }
-        }
-        
-        stage("SonarQube Quality Gate") {
-            steps {
-                   waitForQualityGate abortPipeline: true
-                }
-        }
-        
-        
-        stage('Approval Stage') {
-            steps {
-                input 'Approve Workflow?'
-            }
-        }        
+//         stage('SonarQube analysis') { 
+//              steps {
+//                 withSonarQubeEnv('Sonar') { 
+//                     sh '''cd $microservice
+//                         mvn clean verify sonar:sonar -Dsonar.projectKey=$microservice'''
+//                 }
+//              }
+//         }
+//         
+//         stage("SonarQube Quality Gate") {
+//             steps {
+//                    waitForQualityGate abortPipeline: true
+//                 }
+//         }
+//         
+//         
+//         stage('Approval Stage') {
+//             steps {
+//                 input 'Approve Workflow?'
+//             }
+//         }        
         
         
         stage('Build Image') {
             steps {
                     sh '''
                     cd $microservice
-                    docker build -t d1247/$microservice:latest .
+                    docker build -t d1247/$microservice-app:latest .
                     '''
                 
             }
@@ -59,15 +59,15 @@ pipeline {
            steps{
                script {
                 docker.withRegistry( '', registryCredential ) {
-                    sh 'docker push d1247/$microservice:latest'
+                    sh 'docker push d1247/$microservice-app:latest'
                 }
               }
            }
         }
-        stage('Running Containers') {
-            steps {
-                sh 'docker-compose -p springboot-microservice up -d'
-            }
-        }
+//         stage('Running Containers') {
+//             steps {
+//                 sh 'docker-compose -p springboot-microservice up -d'
+//             }
+//         }
     }
 }
