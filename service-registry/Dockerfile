@@ -1,4 +1,5 @@
 FROM openjdk:11
-ADD target/*.jar app.jar
+ARG JAR_FILE=target/*.jar
+COPY ${JAR_FILE} service-registry.jar
+ENTRYPOINT ["java","-jar","/service-registry.jar"]
 EXPOSE 8761
-ENTRYPOINT ["java","-jar","app.jar"]
