@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: cloud-config-server-app
-          image: d1247/d1247/cloud-config-server-app:latest
+          image: d1247/cloud-config-server-app:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 9296
