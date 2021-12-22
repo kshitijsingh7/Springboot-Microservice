@@ -28,7 +28,7 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-    - port: 9191
+    - port: 80
       targetPort: 9191
       protocol: TCP
   selector:
